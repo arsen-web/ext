@@ -39,7 +39,7 @@ $writer = ExtWriter::setReader($reader)
             [5, 6, 7, 8, 9, 10],
             [6, 7, 8, 9, 10, 11],
         ],
-        function(&$items) {
+        function($items) {
             $result = [];
             foreach($items as $item) {
                 $item[] = array_sum($item);
@@ -76,7 +76,7 @@ ExtWriter::setReader($reader)
             [5, 6, 7, 8, 9, 10],
             [6, 7, 8, 9, 10, 11],
         ],
-        function(&$items) {
+        function($items) {
             $result = [];
             foreach($items as $item) {
                 $item[] = array_sum($item);
