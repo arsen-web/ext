@@ -1,0 +1,5 @@
+${HEADER};;;;;;
+;;;;;;
+${PERIOD};;;;;;
+Итого:;${TOTAL_VALUE_1};${TOTAL_VALUE_2};${TOTAL_VALUE_3} ;${TOTAL_VALUE_4} ;${TOTAL_VALUE_5} ;${TOTAL_VALUE_6} 
+${ITEMS};;;;;;

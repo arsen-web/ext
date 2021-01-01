@@ -1,0 +1,41 @@
+{
+  "name": "arsenweb/ext",
+  "description": "Excel file template engine",
+  "type": "library",
+  "keywords": [
+    "excel",
+    "template",
+    "xlsx",
+    "xls",
+    "csv",
+    "generate",
+    "office"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Arsen-web",
+      "email": "arsen-web@yandex.ru"
+    }
+  ],
+  "require": {
+    "php": ">=7.2.0",
+    "phpoffice/phpspreadsheet": "^1.15"
+  },
+  "autoload": {
+    "psr-4": {
+      "arsenweb\\": "src"
+    }
+  },
+  "config": {
+    "fxp-asset": {
+      "enabled": false
+    }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  ]
+}
