@@ -246,14 +246,17 @@ class ExtWriter implements IExtWriter
             throw new WriterException("Invalid type `{$fileType}`");
         }
 
-        $tempFile = sys_get_temp_dir() . '/' . uniqid('ext_') . $fileType;
+        $tempFile = sys_get_temp_dir() . '/' . uniqid('ext_') . '.' . $fileType;
         fopen($tempFile, 'x');
 
-        $this->save($fileType, $tempFile);
+        try {
+            $this->save($tempFile);
 
-        $handle = fopen($tempFile, 'r');
-        $content = fread($handle, filesize($tempFile));
-        unlink($tempFile);
+            $handle = fopen($tempFile, 'r');
+            $content = fread($handle, filesize($tempFile));
+        } finally {
+            unlink($tempFile);
+        }
 
         return $content;
     }
