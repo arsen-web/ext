@@ -76,7 +76,7 @@ class FileHelper implements IFileHelper
     public function validateFileType(string $pathToFile, string $type): void
     {
         if(!preg_match("/\.{$type}$/", $pathToFile)) {
-            throw new FileException("Файл `{$pathToFile}` не сооветствует типу .{$type}");
+            throw new FileException("The file` {$pathToFile} `does not match the type. {$type}");
         }
     }
 }
