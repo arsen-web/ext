@@ -9,6 +9,7 @@ use arsenweb\Helpers\FileHelper;
 use arsenweb\Helpers\IFileHelper;
 use arsenweb\Reader\ExtReader;
 use arsenweb\Reader\IExtReader;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Writer\Csv;
 use PhpOffice\PhpSpreadsheet\Writer\Xls;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -173,6 +174,7 @@ class ExtWriter implements IExtWriter
      * @return IExtWriter
      * @throws ColumnException
      * @throws WriterException
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     public function setAssociativeArray(string $mask, array $rows, ?callable $fn = null): IExtWriter
     {
@@ -187,10 +189,37 @@ class ExtWriter implements IExtWriter
 
             $colNumberTemp = $colNumber;
             foreach($row as $col) {
-                $this->reader
+
+                if (preg_match('/^(https?:\/\/)/', $col)) {
+                    $this->reader
+                        ->getSpreadsheet()
+                        ->getActiveSheet()
+                        ->setCellValueExplicitByColumnAndRow($colNumberTemp, $rowNumber, 'Ссылка', DataType::TYPE_STRING);
+
+                    $this->reader
+                        ->getSpreadsheet()
+                        ->getActiveSheet()
+                        ->getCellByColumnAndRow($colNumberTemp, $rowNumber)
+                        ->getHyperlink()
+                        ->setUrl($col);
+
+                    $this->reader
+                        ->getSpreadsheet()
+                        ->getActiveSheet()
+                        ->getCellByColumnAndRow($colNumberTemp, $rowNumber)
+                        ->getStyle()->applyFromArray([
+                            'font' => [
+                                'color' => ['rgb' => '7ec0f2'],
+                            ]
+                        ]);
+
+                } else {
+                    $this->reader
                     ->getSpreadsheet()
                     ->getActiveSheet()
                     ->setCellValueByColumnAndRow($colNumberTemp, $rowNumber, $col);
+                }
+
                 $colNumberTemp += 1;
             }
             $rowNumber += 1;
