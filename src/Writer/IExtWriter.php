@@ -21,7 +21,7 @@ interface IExtWriter
         string $direction = self::DIRECTION_DOWN
     ): IExtWriter;
 
-    public function setAssociativeArray(string $mask, array $rows, ?callable $fn = null): IExtWriter;
+    public function setAssociativeArray(string $mask, array $rows, ?callable $fn = null, ?callable $itemHandler = null): IExtWriter;
 
     public function save(string $pathToFile, ?string $fileType = null): bool;
 
