@@ -170,13 +170,14 @@ class ExtWriter implements IExtWriter
     /**
      * @param string $mask
      * @param array $rows
-     * @param callable $fn
+     * @param callable|null $fn
+     * @param callable|null $itemHandler
      * @return IExtWriter
      * @throws ColumnException
      * @throws WriterException
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    public function setAssociativeArray(string $mask, array $rows, ?callable $fn = null): IExtWriter
+    public function setAssociativeArray(string $mask, array $rows, ?callable $fn = null, ?callable $itemHandler = null): IExtWriter
     {
         ['col' => $colNumber, 'row' => $rowNumber] = $this->getCoordinatesByMask($mask);
 
@@ -218,6 +219,10 @@ class ExtWriter implements IExtWriter
                     ->getSpreadsheet()
                     ->getActiveSheet()
                     ->setCellValueByColumnAndRow($colNumberTemp, $rowNumber, $col);
+                }
+
+                if(is_callable($itemHandler)) {
+                    $itemHandler($this->reader, $colNumberTemp, $rowNumber, $col);
                 }
 
                 $colNumberTemp += 1;
